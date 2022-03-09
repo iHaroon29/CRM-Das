@@ -7,6 +7,8 @@ const portNumber = process.env.PORT_NUMBER || process.argv[2] || 8000
 const dbConnection = require('./mongoDB/DBConnection')
 const db = dbConnection.connection
 
+console.log('hello')
+
 app.use(RouteHandling)
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
