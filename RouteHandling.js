@@ -11,6 +11,10 @@ const routerDashboard = require('./Routes/Dashboard/Dashboard')
 
 router.use(Express.json())
 
+router.use('/', (req, res) => {
+  res.send({ status: 200, data: 'Hello World' })
+})
+
 router.use('/Admin/login', isAuthorized)
 
 router.use('/Admin/Dashboard', routerDashboard)
