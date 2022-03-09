@@ -1,6 +1,6 @@
 const Express = require('express')
 const { isAuthenticated } = require('../../../Authentication')
-const { fetchAllLeads, fetchOneLead } = require('../../../Utils/fetchLeads')
+const { fetchAllLeads, fetchOneLead } = require('../../../Utils/FetchLeads')
 const updateLead = require('../../../Utils/updateLead')
 const Router = Express.Router()
 
