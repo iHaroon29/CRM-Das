@@ -4,7 +4,7 @@ const Express = require('express')
 const app = Express()
 const RouteHandling = require('./RouteHandling')
 const portNumber =
-  process.env.PORT_NUMBER || process.argv[2] || process.env.PORT || 8000
+  process.env.PORT || process.argv[2] || process.env.PORT_NUMBER || 8000
 const dbConnection = require('./mongoDB/DBConnection')
 const db = dbConnection.connection
 
