@@ -42,7 +42,7 @@ const Authorization = async (req, res, next) => {
       })
       verify
         ? res.send({ status: 200, data: record, auth: true, token })
-        : res.send('invalid UserID or Password')
+        : res.send('Invalid UserID or Password')
     } else {
       res.send('User not Found')
     }

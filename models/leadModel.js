@@ -25,7 +25,9 @@ const leadSchema = new Schema({
       return validator.isEmail(value)
     },
   },
-  interests: String,
+  interests: {
+    type: Array,
+  },
   situation: String,
   comment: String,
 })

@@ -3,11 +3,13 @@ const { Schema } = mongoose
 const validator = require('validator')
 
 const adminSchema = new Schema({
-  userID: {
+  email: {
     type: String,
     unique: true,
     required: true,
-    unique: true,
+    validate: (value) => {
+      return validator.isEmail(value)
+    },
     lowercase: true,
   },
   password: {

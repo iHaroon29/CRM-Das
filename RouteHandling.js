@@ -15,7 +15,9 @@ router.use('/Admin/login', isAuthorized)
 
 router.use('/Admin/Dashboard', routerDashboard)
 
-router.post('/Admin/LeadSave', storeLeads)
+// router.post('/Admin/LeadSave', storeLeads)
+
+router.post('/User/LeadSave', storeLeads)
 
 router.get('/Admin/logout', hasLoggedOut)
 
