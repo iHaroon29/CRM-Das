@@ -13,8 +13,12 @@ const StoreLeads = async (req, res, next) => {
     await newLead.save()
     res.send({ status: 200, message: 'Lead Saved' })
   } catch (err) {
-    console.log(err.message)
-    res.send({ status: 400, message: 'Lead not Saved' })
+    let message = await err.message
+      .split('{')[1]
+      .split(':')[0]
+      .trim()
+      .toLowerCase()
+    res.send({ status: 400, message: `Unique ${message} needed` })
   }
 }
 
