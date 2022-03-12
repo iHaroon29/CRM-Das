@@ -6,16 +6,17 @@ const {
   hasLoggedOut,
 } = require('./Authentication')
 const storeLeads = require('./Utils/StoreLeads')
+const cors = require('cors')
 
 const routerDashboard = require('./Routes/Dashboard/Dashboard')
-
+router.use(cors())
 router.use(Express.json())
 
-router.use('/Admin/login', isAuthorized)
+router.use('/Admin/login', isAuthorized, () => {
+  console.log('test')
+})
 
 router.use('/Admin/Dashboard', routerDashboard)
-
-// router.post('/Admin/LeadSave', storeLeads)
 
 router.post('/User/LeadSave', storeLeads)
 

@@ -41,7 +41,7 @@ const Authorization = async (req, res, next) => {
         expiresIn: 86400, // expires in 24 hours
       })
       verify
-        ? res.send({ status: 200, data: record, auth: true, token })
+        ? res.send({ status: 200, auth: true, token })
         : res.send('Invalid UserID or Password')
     } else {
       res.send('User not Found')
