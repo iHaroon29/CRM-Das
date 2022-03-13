@@ -33,21 +33,27 @@ const Authorization = async (req, res, next) => {
 
   try {
     let record = await adminModel.findOne({
-      userID: req.body.userName,
+      email: req.body.email,
     })
-    if (record) {
+    if (record !== null) {
       let verify = await bcrypt.compare(req.body.password, record.password)
-      let token = await JWT.sign({ id: record._id }, process.env.secret, {
-        expiresIn: 86400, // expires in 24 hours
-      })
-      verify
-        ? res.send({ status: 200, auth: true, token })
-        : res.send('Invalid UserID or Password')
+
+      if (verify) {
+        let token = await JWT.sign({ id: record._id }, process.env.secret, {
+          expiresIn: 86400,
+        })
+        res.send({ status: 200, auth: true, token })
+      } else {
+        res.send({
+          status: 400,
+          auth: false,
+          data: 'Invalid Email or Password',
+        })
+      }
     } else {
-      res.send('User not Found')
+      res.send({ status: 400, auth: false, data: 'Invalid Email or Password' })
     }
   } catch (error) {
-    console.log('error from here')
     console.log(error.message)
   }
 }
