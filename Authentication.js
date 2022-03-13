@@ -25,7 +25,7 @@ const Authentication = async (req, res, next) => {
 const Authorization = async (req, res, next) => {
   // let hashValue = await bcrypt.hash(req.body.password, 10)
   // let record = new adminModel({
-  //   userID: req.body.userName,
+  //   email: req.body.email,
   //   password: hashValue,
   // })
 

@@ -12,9 +12,7 @@ const routerDashboard = require('./Routes/Dashboard/Dashboard')
 router.use(cors())
 router.use(Express.json())
 
-router.use('/Admin/login', isAuthorized, () => {
-  console.log('test')
-})
+router.use('/Admin/login', isAuthorized)
 
 router.use('/Admin/Dashboard', routerDashboard)
 
