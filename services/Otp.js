@@ -6,7 +6,7 @@ const fastTwoSms = require('fast-two-sms')
 
 // OPT Generation
 
-const otpGeneration = async (req, res, next) => {
+const otpGeneration = async () => {
   let otp = await otpGenerator.generate(6, {
     upperCaseAlphabets: false,
     specialChars: false,
@@ -28,7 +28,7 @@ const sendingOtp = async (contactNumber, otp) => {
       throw new Error(response.message)
     }
   } catch (e) {
-    res.send({ status: 400, message: e.message })
+    res.status(400).send(e.message)
   }
 }
 
@@ -51,7 +51,7 @@ const otpVerification = async (req, res, next) => {
         'Thank you for registering, our Specialist will get in touch soon!',
     })
   } catch (err) {
-    res.send({ status: 400, message: err.message })
+    res.status(400).send(err.message)
   }
 }
 

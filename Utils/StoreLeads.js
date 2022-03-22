@@ -27,8 +27,7 @@ const StoreLeads = async (req, res, next) => {
     let message = await /userName|phoneNumber|email/
       .exec(err.message)[0]
       .toLowerCase()
-    res.status(400).send({ message: `Unique ${message} needed` })
-    // res.send()
+    res.status(400).send(message)
   }
 }
 

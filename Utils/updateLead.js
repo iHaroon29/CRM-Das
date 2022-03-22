@@ -12,7 +12,7 @@ const updateLead = async (req, res, next) => {
     res.send({ status: 200, message: updatedLead })
   } catch (err) {
     console.log(err.message)
-    res.send({ status: 400, message: 'Lead not updated, Contact Devs' })
+    res.status(400).send('Lead not updated, Contact Devs')
   }
 }
 
