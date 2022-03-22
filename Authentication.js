@@ -23,55 +23,39 @@ const Authentication = async (req, res, next) => {
 }
 
 const Authorization = async (req, res, next) => {
-  // let hashValue = await bcrypt.hash(req.body.password, 10)
-  // let record = new adminModel({
-  //   email: req.body.email,
-  //   password: hashValue,
-  // })
-
-  // await record.save()
-
   try {
     let record = await adminModel.findOne({
       email: req.body.email,
     })
-    if (record !== null) {
+    if (record === null) {
+      throw new Error('Invalid Email or Password')
+    } else {
       let verify = await bcrypt.compare(req.body.password, record.password)
-
       if (verify) {
         let token = await JWT.sign({ id: record._id }, process.env.secret, {
           expiresIn: 86400,
         })
         res.send({ status: 200, auth: true, token })
       } else {
-        res.send({
-          status: 400,
-          auth: false,
-          data: 'Invalid Email or Password',
-        })
+        throw new Error('Invalid Email or Password')
       }
-    } else {
-      res.send({ status: 400, auth: false, data: 'Invalid Email or Password' })
     }
-  } catch (error) {
-    console.log(error.message)
+  } catch (err) {
+    console.log(err.message)
+    res.send({ status: 400, auth: false, data: err.message })
   }
 }
 
 const Logout = async (req, res, next) => {
   try {
-    ;(await JWT.verify(req.headers.authtoken, process.env.secret))
-      ? res.send({ canLogout: 'true', data: { token: '' } })
-      : res.send({
-          canLogout: 'false',
-          data: { message: "Can't log-out, Contact Devs please" },
-        })
+    await JWT.verify(req.headers.authtoken, process.env.secret)
+    res.send({ canLogout: 'true', data: { token: '' } })
   } catch (err) {
     console.log(err.message)
     res.send({
       status: 500,
       canLogout: false,
-      data: 'Failed to authenticate token',
+      data: "Can't log-out, Contact Devs please",
     })
   }
 }
