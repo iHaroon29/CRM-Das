@@ -6,7 +6,7 @@ const StoreLeads = async (req, res, next) => {
     userName: req.body.userName,
     phoneNumber: req.body.phoneNumber,
     email: req.body.email,
-    interests: req.body.interests,
+    qualification: req.body.qualification,
     situation: 'Registered',
     comment: '',
     otp: await generateOtp(),
