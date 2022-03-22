@@ -16,7 +16,10 @@ const fetchLead = async (req, res, next) => {
     res.send({ status: 200, data: lead })
   } catch (error) {
     console.log(error.message)
-    res.status(400).send('Please contact Devs')
+    res.send({
+      status: 400,
+      message: 'Please contact devs!',
+    })
   }
 }
 

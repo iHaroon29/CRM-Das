@@ -28,7 +28,7 @@ const sendingOtp = async (contactNumber, otp) => {
       throw new Error(response.message)
     }
   } catch (e) {
-    res.status(400).send(e.message)
+    res.send({ status: 400, message: e.message })
   }
 }
 
@@ -51,7 +51,7 @@ const otpVerification = async (req, res, next) => {
         'Thank you for registering, our Specialist will get in touch soon!',
     })
   } catch (err) {
-    res.status(400).send(err.message)
+    res.send({ status: 400, message: e.message })
   }
 }
 
