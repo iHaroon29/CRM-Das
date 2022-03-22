@@ -25,8 +25,16 @@ const leadSchema = new Schema({
       return validator.isEmail(value)
     },
   },
-  interests: {
-    type: Array,
+  qualification: {
+    type: String,
+  },
+  otp: {
+    type: String,
+    required: true,
+  },
+  otpVerified: {
+    type: Boolean,
+    required: true,
   },
   situation: String,
   comment: String,

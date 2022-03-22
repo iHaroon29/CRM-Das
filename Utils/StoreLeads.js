@@ -1,4 +1,5 @@
 const leadModel = require('../models/leadModel')
+const { generateOtp, sendOtp } = require('../services/Otp')
 
 const StoreLeads = async (req, res, next) => {
   let newLead = new leadModel({
@@ -8,11 +9,20 @@ const StoreLeads = async (req, res, next) => {
     interests: req.body.interests,
     situation: 'Registered',
     comment: '',
+    otp: await generateOtp(),
+    otpVerified: false,
   })
   try {
-    await newLead.save()
-    res.send({ status: 200, message: 'Lead Saved' })
+    if (await newLead.save()) {
+      await sendOtp(req.body.phoneNumber, newLead.otp)
+      res.send({
+        status: 200,
+        message: 'OTP has been sent to your mobile phone.',
+        data: req.body.userName,
+      })
+    }
   } catch (err) {
+    console.log(err.message)
     let message = await /userName|phoneNumber|email/
       .exec(err.message)[0]
       .toLowerCase()

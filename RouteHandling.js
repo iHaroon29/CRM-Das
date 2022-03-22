@@ -7,9 +7,10 @@ const {
 } = require('./Authentication')
 const storeLeads = require('./Utils/StoreLeads')
 const cors = require('cors')
+const { verifyOtp } = require('./services/Otp')
 
 const routerDashboard = require('./Routes/Dashboard/Dashboard')
-const test = require('./services/Email')
+
 router.use(cors())
 router.use(Express.json())
 
@@ -21,6 +22,6 @@ router.post('/User/LeadSave', storeLeads)
 
 router.get('/Admin/logout', hasLoggedOut)
 
-router.get('/test', test)
+router.post('/User/OTPVerify', verifyOtp)
 
 module.exports = router
