@@ -12,13 +12,14 @@ const StoreLeads = async (req, res, next) => {
     otp: await generateOtp(),
     otpVerified: false,
   })
+
   try {
     if (await newLead.save()) {
       await sendOtp(req.body.phoneNumber, newLead.otp)
       res.send({
         status: 200,
         message: 'OTP has been sent to your mobile phone.',
-        data: req.body.userName,
+        userName: req.body.userName,
       })
     }
   } catch (err) {
@@ -26,8 +27,7 @@ const StoreLeads = async (req, res, next) => {
     let message = await /userName|phoneNumber|email/
       .exec(err.message)[0]
       .toLowerCase()
-
-    res.send({ status: 400, message: `Unique ${message} needed` })
+    res.send(new Error({ status: 400, message: `Unique ${message} needed` }))
   }
 }
 
