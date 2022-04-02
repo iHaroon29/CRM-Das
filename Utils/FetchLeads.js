@@ -1,6 +1,6 @@
 const leadModel = require('../models/leadModel')
 
-const fetchLeads = async (req, res, next) => {
+const fetchLeads = async (res) => {
   try {
     let leads = await leadModel.find()
     res.send({ status: 200, data: leads })
@@ -10,15 +10,18 @@ const fetchLeads = async (req, res, next) => {
   }
 }
 
-const fetchLead = async (req, res, next) => {
+const fetchLead = async (req, res) => {
   try {
     let lead = await leadModel.findOne({ userName: req.params.userName })
+    if (lead === null) {
+      throw new Error('No such Entry found')
+    }
     res.send({ status: 200, data: lead })
   } catch (error) {
     console.log(error.message)
     res.send({
       status: 400,
-      message: 'Please contact devs!',
+      message: error.message,
     })
   }
 }

@@ -13,8 +13,8 @@ const Authentication = async (req, res, next) => {
       next()
     } catch (err) {
       console.log(err.message)
-      res.send({
-        status: 500,
+      res.status(401).send({
+        status: 401,
         auth: false,
         data: 'Failed to authenticate token',
       })
@@ -42,14 +42,14 @@ const Authorization = async (req, res, next) => {
     }
   } catch (err) {
     console.log(err.message)
-    res.send({ status: 400, auth: false, data: err.message })
+    res.status(401).send({ status: 401, auth: false, data: err.message })
   }
 }
 
 const Logout = async (req, res, next) => {
   try {
     await JWT.verify(req.headers.authtoken, process.env.secret)
-    res.send({ canLogout: 'true', data: { token: '' } })
+    res.send({ canLogout: true, data: { token: '' } })
   } catch (err) {
     console.log(err.message)
     res.send({

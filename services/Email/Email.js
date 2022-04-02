@@ -23,7 +23,7 @@ const test = () => {
     html: `${template}`, // plain text body
   }
 
-  transporter.sendMail(mailOptions, function (err, info) {
+  transporter.sendMail(mailOptions, (err, info) => {
     if (err) console.log(err)
     else console.log(info)
   })
