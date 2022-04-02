@@ -3,7 +3,7 @@ const crypto = require('crypto')
 
 const createTask = async (req, res) => {
   let newTask = new taskModel({
-    id: await crypto.randomBytes(20).toString('hex'),
+    taskID: await crypto.randomBytes(20).toString('hex'),
     applicationID:
       req.body.applicationName +
       '-' +
@@ -23,8 +23,10 @@ const createTask = async (req, res) => {
       res.status(200).send({ message: 'Task Flow has been create' })
     }
   } catch (err) {
-    console.log(err)
-    res.status(400).send({ message: err })
+    let errorText = await /taskID|applicationID|applicationTaskFlowUseCase/
+      .exec(err.message)[0]
+      .toLowerCase()
+    res.status(400).send({ message: `${errorText} already exists.` })
   }
 }
 
