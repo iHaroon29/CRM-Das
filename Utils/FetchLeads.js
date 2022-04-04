@@ -1,6 +1,6 @@
 const leadModel = require('../models/leadModel')
 
-const fetchLeads = async (res) => {
+const fetchLeads = async (req, res, next) => {
   try {
     let leads = await leadModel.find()
     res.send({ status: 200, data: leads })

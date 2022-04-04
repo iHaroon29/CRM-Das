@@ -16,7 +16,6 @@ const fetchTask = async (req, res, next) => {
     })
   }
 }
-
 module.exports = {
   fetchedTask: fetchTask,
 }
