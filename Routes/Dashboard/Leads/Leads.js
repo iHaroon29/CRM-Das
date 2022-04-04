@@ -1,7 +1,10 @@
 const Express = require('express')
 const { isAuthenticated } = require('../../../Authentication')
-const { fetchAllLeads, fetchOneLead } = require('../../../Utils/FetchLeads')
-const updateLead = require('../../../Utils/updateLead')
+const {
+  fetchAllLeads,
+  fetchOneLead,
+} = require('../../../Utils/Leads/FetchLeads')
+const updateLead = require('../../../Utils/Leads/updateLead')
 const Router = Express.Router()
 
 Router.route('/:userName').get(isAuthenticated, async (req, res, next) => {

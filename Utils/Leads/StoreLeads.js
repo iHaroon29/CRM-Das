@@ -1,5 +1,5 @@
-const leadModel = require('../models/leadModel')
-const { generateOtp, sendOtp } = require('../services/Otp')
+const leadModel = require('../..//models/leadModel')
+const { generateOtp, sendOtp } = require('../../services/Otp')
 
 const StoreLeads = async (req, res, next) => {
   let newLead = new leadModel({

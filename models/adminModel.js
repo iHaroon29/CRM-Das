@@ -15,6 +15,9 @@ const adminSchema = new Schema({
   password: {
     type: String,
   },
+  timeLoggedIn: {
+    type: String,
+  },
 })
 
 module.exports = mongoose.model('Admin', adminSchema)

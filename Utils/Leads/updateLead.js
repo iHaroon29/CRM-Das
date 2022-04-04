@@ -1,10 +1,10 @@
-const leadModel = require('../models/leadModel')
+const leadModel = require('../../models/leadModel')
 
 const updateLead = async (req, res, next) => {
   try {
     let updatedLead = await leadModel.findOneAndUpdate(
       { userName: req.params.userName },
-      { situation: req.body.situation, comment: req.body.comment },
+      { disposition: req.body.disposition, leadSource: req.body.leadSource },
       {
         new: true,
       }
