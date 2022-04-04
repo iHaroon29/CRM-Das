@@ -7,8 +7,9 @@ const StoreLeads = async (req, res, next) => {
     phoneNumber: req.body.phoneNumber,
     email: req.body.email,
     qualification: req.body.qualification,
-    situation: 'Registered',
-    comment: '',
+    disposition: '',
+    leadSource: '',
+    createdOn: new Date().toLocaleString(),
     otp: await generateOtp(),
     otpVerified: false,
   })

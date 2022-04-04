@@ -1,12 +1,12 @@
 const Express = require('express')
-const router = Express.Router()
+const Router = Express.Router()
 const cors = require('cors')
 const AdminRoutes = require('./Admin/AdminRoutes')
 const UserRoutes = require('./User/UserRoutes')
-router.use(cors())
-router.use(Express.json())
+Router.use(cors())
+Router.use(Express.json())
 
-router.use('/Admin', AdminRoutes)
-router.post('/User', UserRoutes)
+Router.use('/Admin', AdminRoutes)
+Router.use('/User', UserRoutes)
 
-module.exports = router
+module.exports = Router

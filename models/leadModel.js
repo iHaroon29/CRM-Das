@@ -14,9 +14,6 @@ const leadSchema = new Schema({
     type: Number,
     unique: true,
     required: true,
-    validate: (value) => {
-      return validator.isMobileNumber(value)
-    },
   },
   email: {
     type: String,
@@ -34,9 +31,6 @@ const leadSchema = new Schema({
   otp: {
     type: String,
     required: true,
-    validate: (value) => {
-      return validator.isNumeric(value)
-    },
   },
   otpVerified: {
     type: Boolean,

@@ -1,9 +1,5 @@
 const Express = require('express')
-const {
-  isAuthenticated,
-  isAuthorized,
-  hasLoggedOut,
-} = require('../../Authentication')
+const { isAuthorized } = require('../../Authentication')
 
 const Router = Express.Router()
 const Dashboard = require('../Dashboard/Dashboard')

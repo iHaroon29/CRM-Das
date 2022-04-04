@@ -19,7 +19,8 @@ const Authentication = async (req, res, next) => {
     next()
   } catch (err) {
     console.log(err.message)
-    res.status(401).send({
+    res.send({
+      status: 401,
       auth: false,
       message: err.message,
     })
