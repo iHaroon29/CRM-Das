@@ -41,8 +41,9 @@ const Authorization = async (req, res) => {
           expiresIn: 86400,
         })
         await new tokenModel({
-          userName: req.body.email,
+          email: req.body.email,
           token: token,
+          timeLoggedIn: new Date().toLocaleString(),
         }).save()
         await res.send({ status: 200, auth: true, token })
       } else {
