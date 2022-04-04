@@ -14,7 +14,7 @@ const updateLead = async (req, res, next) => {
     console.log(err.message)
     res.send({
       status: 400,
-      message: 'Lead not updated, Contact Devs',
+      message: 'Lead not updated',
     })
   }
 }
