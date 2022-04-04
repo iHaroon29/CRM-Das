@@ -3,10 +3,13 @@ const leadModel = require('../../models/leadModel')
 const fetchLeads = async (req, res, next) => {
   try {
     let leads = await leadModel.find({}, { otp: 0, otpVerified: 0 })
-    res.send({ status: 200, data: leads })
+    res.send({ status: 200, leads })
   } catch (err) {
     console.log(err.message)
-    res.status(400).send('Please contact Devs')
+    res.send({
+      status: 400,
+      message: error.message,
+    })
   }
 }
 
