@@ -10,6 +10,9 @@ const tokenSchema = new Schema({
     type: String,
     required: true,
   },
+  timeLoggedIn: {
+    type: String,
+  },
 })
 
 module.exports = mongoose.model('Token', tokenSchema)
