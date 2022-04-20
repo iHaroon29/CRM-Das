@@ -25,9 +25,20 @@ const leadSchema = new Schema({
       return validator.isEmail(value)
     },
   },
-  interests: String,
-  situation: String,
-  comment: String,
+  qualification: {
+    type: String,
+  },
+  otp: {
+    type: String,
+    required: true,
+  },
+  otpVerified: {
+    type: Boolean,
+    required: true,
+  },
+  disposition: String,
+  leadSource: String,
+  createdOn: String,
 })
 
 module.exports = mongoose.model('Lead', leadSchema)

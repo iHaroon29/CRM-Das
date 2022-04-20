@@ -3,69 +3,69 @@ require('dotenv').config()
 const adminModel = require('./models/adminModel')
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
+const tokenModel = require('./models/tokenModel')
 
 const Authentication = async (req, res, next) => {
-  if (!req.headers.authtoken) {
-    res.status(401).send({ auth: false, message: 'No token provided.' })
-  } else {
-    try {
-      await JWT.verify(req.headers.authtoken, process.env.secret)
-      next()
-    } catch (err) {
-      console.log(err.message)
-      res.send({
-        status: 500,
-        auth: false,
-        data: 'Failed to authenticate token',
-      })
+  const { authorization } = req.headers
+  try {
+    if (!authorization) {
+      throw new Error('No token provided')
     }
+    let tokenRecord = await tokenModel.findOne({ authorization })
+    if (tokenRecord === null) {
+      throw new Error('Session Invalid')
+    }
+    await JWT.verify(authorization, process.env.secret)
+    next()
+  } catch (err) {
+    console.log(err.message)
+    res.send({
+      status: 401,
+      auth: false,
+      message: err.message,
+    })
   }
 }
 
-const Authorization = async (req, res, next) => {
-  // let hashValue = await bcrypt.hash(req.body.password, 10)
-  // let record = new adminModel({
-  //   userID: req.body.userName,
-  //   password: hashValue,
-  // })
-
-  // await record.save()
-
+const Authorization = async (req, res) => {
   try {
     let record = await adminModel.findOne({
-      userID: req.body.userName,
+      email: req.body.email,
     })
-    if (record) {
-      let verify = await bcrypt.compare(req.body.password, record.password)
-      let token = await JWT.sign({ id: record._id }, process.env.secret, {
-        expiresIn: 86400, // expires in 24 hours
-      })
-      verify
-        ? res.send({ status: 200, data: record, auth: true, token })
-        : res.send('invalid UserID or Password')
+    if (record === null) {
+      throw new Error('Invalid Email or Password')
     } else {
-      res.send('User not Found')
+      let verify = await bcrypt.compare(req.body.password, record.password)
+      if (verify) {
+        let token = await JWT.sign({ id: record._id }, process.env.secret, {
+          expiresIn: 86400,
+        })
+        await new tokenModel({
+          email: req.body.email,
+          token: token,
+          timeLoggedIn: new Date().toLocaleString(),
+        }).save()
+        await res.send({ status: 200, auth: true, token })
+      } else {
+        throw new Error('Invalid Email or Password')
+      }
     }
-  } catch (error) {
-    console.log('error from here')
-    console.log(error.message)
+  } catch (err) {
+    console.log(err.message)
+    res.send({ status: 401, auth: false, data: err.message })
   }
 }
 
-const Logout = async (req, res, next) => {
+const Logout = async (req, res) => {
   try {
-    ;(await JWT.verify(req.headers.authtoken, process.env.secret))
-      ? res.send({ canLogout: 'true', data: { token: '' } })
-      : res.send({
-          canLogout: 'false',
-          data: { message: "Can't log-out, Contact Devs please" },
-        })
+    await JWT.verify(req.headers.authorization, process.env.secret)
+    res.send({ canLogout: true, data: { token: '' } })
   } catch (err) {
     console.log(err.message)
     res.send({
       status: 500,
       canLogout: false,
-      data: 'Failed to authenticate token',
+      data: "Can't log-out, Contact Devs please",
     })
   }
 }
